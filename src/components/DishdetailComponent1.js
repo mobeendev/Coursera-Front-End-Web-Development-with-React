@@ -7,7 +7,7 @@ class Dishdetail extends Component {
         if (comments == null) {
             return (<div></div>)
         }
-        const cmnts = comments.map((comment) => {  
+        const cmnts = comments.map(comment => {
             return (
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
