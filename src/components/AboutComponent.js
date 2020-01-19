@@ -10,12 +10,9 @@ import {
 import { Link } from "react-router-dom";
 
 function About(props) {
-  const leaders = props.leaders.map(leader => {
-    return <p>Leader {leader.name}</p>;
-  });
-
-  const RenderLeader = () => {
-    const leaders_list = props.leaders.map(leader => {
+    
+  const RenderLeader = ({ leaders }) => {
+    const leaders_list = leaders.map(leader => {
       return (
         <div key={leader.id} className="col-12 mt-3">
           <Media>
@@ -24,7 +21,7 @@ function About(props) {
             </Media>
             <Media body className="ml-2">
               <Media heading>{leader.name}</Media>
-              <p>{leader.designation}</p>
+              <p>{leader.abbr}</p>
               <p>{leader.description}</p>
             </Media>
           </Media>
@@ -112,7 +109,7 @@ function About(props) {
         </div>
 
         <div className="col-12">
-          <RenderLeader />
+          <RenderLeader leaders={props.leaders} />
         </div>
       </div>
     </div>
