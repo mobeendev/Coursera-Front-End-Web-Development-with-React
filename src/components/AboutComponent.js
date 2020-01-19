@@ -14,21 +14,20 @@ function About(props) {
   const RenderLeader = ({ leaders }) => {
     const leaders_list = leaders.map(leader => {
       return (
-        <div key={leader.id} className="col-12 mt-3">
-          <Media>
+          <Media key={leader.id}>
             <Media left>
               <Media object src={leader.image} alt={leader.name} />
             </Media>
             <Media body className="ml-2">
               <Media heading>{leader.name}</Media>
-              <p>{leader.abbr}</p>
+              <p>{leader.designation}</p>
               <p>{leader.description}</p>
             </Media>
           </Media>
-        </div>
+        
       );
     });
-
+    // Returning the complete leader's list
     return <Media list>{leaders_list}</Media>;
   };
 
