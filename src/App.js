@@ -5,15 +5,15 @@ import Main from './components/MainComponent'
 class App extends React.Component {
 
 
-  render() {
-    return (
-      <BrowserRouter>
-      <div className="App">
-        <Main />
-      </div>
-    </BrowserRouter>
-    );
-  }
+    render() {
+        return (
+            <BrowserRouter>
+                <div className="App">
+                    <Main/>
+                </div>
+            </BrowserRouter>
+        );
+    }
 
 
 }
