@@ -18,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
+
 const mapStateToProps = state => {
     return {dishes: state.dishes, comments: state.comments, promotions: state.promotions, leaders: state.leaders}
 }
