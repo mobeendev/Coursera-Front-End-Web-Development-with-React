@@ -9,8 +9,11 @@ import {
     BreadcrumbItem
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {Loading} from './LoadingComponent';
 
-function RenderMenuItem({dish, onClick}) {
+function RenderMenuItem({dish, isLoading}) {
+
+
     return (
         <Card>
             <Link to={
@@ -37,15 +40,29 @@ function RenderMenuItem({dish, onClick}) {
 
 const Menu = (props) => {
 
-    const menu = props.dishes.map((dish) => {
+    if (props.dishes.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading/>
+                </div>
+            </div>
+        );
+    }
+
+    const menu = props.dishes.dishes.map((dish) => {
+
         return (
             <div className="col-12 col-md-5 m-1"
                 key={
                     dish.id
             }>
-                <RenderMenuItem dish={dish}/>
+                <RenderMenuItem dish={dish}
+                    isLoading
+                    ={props.dishes.isLoading}/>
             </div>
         );
+
     });
 
     return (
