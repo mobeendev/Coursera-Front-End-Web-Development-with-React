@@ -6,16 +6,16 @@ import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import Footer from "./FooterComponent";
 import DishDetail from "./DishdetailComponent";
-import {addComment, fetchDishes,fetchComments,fetchPromos} from '../redux/ActionCreators';
+import {postComment, fetchDishes,fetchComments,fetchPromos} from '../redux/ActionCreators';
 
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {actions} from 'react-redux-form';
 
-
 const mapDispatchToProps = dispatch => ({
 
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    // addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
     fetchDishes: () => {
         dispatch(fetchDishes())
     },
@@ -77,9 +77,8 @@ class Main extends Component {
                     comments={
                         this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))
                     }
-                    addComment={
-                        this.props.addComment
-                    }/>
+                    postComment={this.props.postComment}
+                    />
             );
         };
         const AboutPage = () => {
