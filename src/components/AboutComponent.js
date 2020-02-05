@@ -8,43 +8,65 @@ import {
     Media
 } from "reactstrap";
 import {Link} from "react-router-dom";
+import {baseUrl} from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { Loading } from './LoadingComponent';
 
 function About(props) {
 
-    const RenderLeader = ({leaders}) => {
+    const RenderLeader = ({leaders,leaderLoading,leaderErrMess}) => {
+
+        console.log(leaderLoading,leaderErrMess);
+
         const leaders_list = leaders.map(leader => {
             return (
-                <Media key={
+                <Fade in key={
                     leader.id
                 }>
-                    <Media left>
-                        <Media object
-                            src={
-                                leader.image
-                            }
-                            alt={
+                    <Media >
+                        <Media left>
+                            <Media object
+                                src={
+                                    baseUrl + leader.image
+                                }
+                                alt={
+                                    leader.name
+                                }/>
+                        </Media>
+                        <Media body className="ml-2">
+                            <Media heading>
+                                {
                                 leader.name
-                            }/>
+                            }</Media>
+                            <p>{
+                                leader.designation
+                            }</p>
+                            <p>{
+                                leader.description
+                            }</p>
+                        </Media>
                     </Media>
-                    <Media body className="ml-2">
-                        <Media heading>
-                            {
-                            leader.name
-                        }</Media>
-                        <p>{
-                            leader.designation
-                        }</p>
-                        <p>{
-                            leader.description
-                        }</p>
-                    </Media>
-                </Media>
-
+                </Fade>
             );
         });
         // Returning the complete leader's list
-        return <Media list>
-            {leaders_list}</Media>;
+                if (leaderLoading) {
+                    return <Loading />;
+                }
+                else if (leaderErrMess) {
+                    return (
+                        <h4>{leaderErrMess}</h4>
+                    );
+                }
+                else return (
+                    <Media list>
+                        <Stagger in>
+                            {leaders_list}
+                        </Stagger>
+                    </Media>
+                );
+
+
     };
 
     return (
@@ -66,17 +88,17 @@ function About(props) {
                     <h2>Our History</h2>
                     <p>
                         Started in 2010, Ristorante con Fusion quickly established itself as
-                                    a culinary icon par excellence in Hong Kong. With its unique brand
-                                    of world fusion cuisine that can be found nowhere else, it enjoys
-                                    patronage from the A-list clientele in Hong Kong. Featuring four of
-                                    the best three-star Michelin chefs in the world, you never know what
-                                    will arrive on your plate the next time you visit us.
+                                                            a culinary icon par excellence in Hong Kong. With its unique brand
+                                                            of world fusion cuisine that can be found nowhere else, it enjoys
+                                                            patronage from the A-list clientele in Hong Kong. Featuring four of
+                                                            the best three-star Michelin chefs in the world, you never know what
+                                                            will arrive on your plate the next time you visit us.
                     </p>
                     <p>
                         The restaurant traces its humble beginnings to{" "}
                         <em>The Frying Pan</em>, a successful chain started by our CEO, Mr.
-                                        Peter Pan, that featured for the first time the world's best
-                                        cuisines in a pan.
+                                                                    Peter Pan, that featured for the first time the world's best
+                                                                    cuisines in a pan.
                     </p>
                 </div>
                 <div className="col-12 col-md-5">
@@ -104,13 +126,13 @@ function About(props) {
                             <blockquote className="blockquote">
                                 <p className="mb-0">
                                     You better cut the pizza in four pieces because I'm not hungry
-                                                      enough to eat six.
+                                                                                          enough to eat six.
                                 </p>
                                 <footer className="blockquote-footer">
                                     Yogi Berra,
                                     <cite title="Source Title">
                                         The Wit and Wisdom of Yogi Berra, P. Pepe, Diversion Books,
-                                                            2014
+                                                                                                    2014
                                     </cite>
                                 </footer>
                             </blockquote>
@@ -126,7 +148,15 @@ function About(props) {
                 <div className="col-12">
                     <RenderLeader leaders={
                         props.leaders
-                    }/>
+                    }
+                    leaderLoading={
+                        props.isLoading
+                    }
+                    leaderErrMess={
+                        props.errMess
+                    }
+                    
+                    />
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import Footer from "./FooterComponent";
 import DishDetail from "./DishdetailComponent";
-import {postComment, fetchDishes, fetchComments, fetchPromos} from '../redux/ActionCreators';
+import {postComment, fetchDishes, fetchComments, fetchPromos,fetchLeaders,postFeedback} from '../redux/ActionCreators';
 
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
@@ -15,8 +15,9 @@ import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 const mapDispatchToProps = dispatch => ({
 
-    // addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+    postFeedback: (firstname,lastname,telnum,email,agree,contactType,message) =>
+                    dispatch(postFeedback(firstname,lastname,telnum,email,agree,contactType,message)),
     fetchDishes: () => {
         dispatch(fetchDishes())
     },
@@ -24,14 +25,20 @@ const mapDispatchToProps = dispatch => ({
         dispatch(actions.reset('feedback'))
     },
     fetchComments: () => dispatch(fetchComments()),
-    fetchPromos: () => dispatch(fetchPromos())
-
+    fetchPromos: () => dispatch(fetchPromos()),
+    fetchLeaders: () => dispatch(fetchLeaders())
 });
 
-
 const mapStateToProps = state => {
-    return {dishes: state.dishes, comments: state.comments, promotions: state.promotions, leaders: state.leaders}
-}
+    return {
+      dishes: state.dishes,
+      comments: state.comments,
+      promotions: state.promotions,
+      leaders: state.leaders
+    };
+  };
+
+
 
 class Main extends Component {
     constructor(props) {
@@ -42,6 +49,7 @@ class Main extends Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
     onDishSelect(dishId) {
         this.setState({selectedDish: dishId});
@@ -71,8 +79,16 @@ class Main extends Component {
                         this.props.promotions.errMess
                     }
                     leader={
-                        this.props.leaders.filter((leader) => leader.featured)[0]
-                    }/>
+                        this.props.leaders.leaders.filter((leader) => leader.featured)[0]
+                    }
+                    leaderLoading={
+                        this.props.leaders.isLoading
+                    }
+                    leaderErrMess={
+                        this.props.leaders.errMess
+                    }
+                    
+                    />
             );
         }
 
@@ -97,8 +113,15 @@ class Main extends Component {
         };
         const AboutPage = () => {
             return <About leaders={
-                this.props.leaders
-            }/>;
+                this.props.leaders.leaders
+            }
+            isLoading={
+                this.props.leaders.isLoading
+            }
+            errMess={
+                this.props.leaders.errMess
+            }
+            />;
         };
 
         return (
