@@ -148,7 +148,11 @@ class Main extends Component {
                                 component={
                                     () => <Contact resetFeedbackForm={
                                         this.props.resetFeedbackForm
-                                    }/>
+                                    }
+                                    
+                                    postFeedback={this.props.postFeedback}
+                                    
+                                    />
                                 }/>
 
                             <Route path="/aboutus"
